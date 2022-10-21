@@ -13,12 +13,11 @@
 
     public class GetUserDetailsQueryResponseMessage: GetUserDetailsQueryResponse
     {
-        public GetUserDetailsQueryResponseMessage(string message)
+        public GetUserDetailsQueryResponseMessage()
         {
-            ResponseMessage = message;
             IsSuccess = true;
         }
-        public string ResponseMessage { get; set; }
+        public string? ResponseMessage { get; set; }
         public bool IsSuccess { get; set; }
     }
 }

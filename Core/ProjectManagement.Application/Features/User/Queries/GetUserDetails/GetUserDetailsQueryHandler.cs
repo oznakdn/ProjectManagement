@@ -4,7 +4,7 @@ using ProjectManagement.Application.UnitOfWork;
 
 namespace ProjectManagement.Application.Features.User.Queries.GetUserDetails
 {
-    public class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQueryRequest, GetUserDetailsQueryResponse>
+    public class GetUserDetailsQueryHandler : IRequestHandler<GetUserDetailsQueryRequest, GetUserDetailsQueryResponseMessage>
     {
         private readonly IQueryUnitOfWork query;
         private readonly IMapper mapper;
@@ -15,19 +15,30 @@ namespace ProjectManagement.Application.Features.User.Queries.GetUserDetails
             this.mapper = mapper;
         }
 
-        public async Task<GetUserDetailsQueryResponse> Handle(GetUserDetailsQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GetUserDetailsQueryResponseMessage> Handle(GetUserDetailsQueryRequest request, CancellationToken cancellationToken)
         {
             var existsUser = await query.UserQuery.GetWithIncludeAsync(false, u => u.Id == Guid.Parse(request.Id), u => u.Employee);
 
-            if(existsUser == null)
+            if (existsUser == null)
             {
-                return new GetUserDetailsQueryResponseMessage("User not found.") { IsSuccess=false};
+                return new GetUserDetailsQueryResponseMessage { IsSuccess = false, ResponseMessage = "User not found!" };
             }
 
 
-            return mapper.Map<GetUserDetailsQueryResponse>(existsUser);
-          
-           
+            var userModel = mapper.Map<GetUserDetailsQueryResponse>(existsUser);
+
+            return new GetUserDetailsQueryResponseMessage()
+            {
+                Name = userModel.Name,
+                Lastname = userModel.Lastname,
+                Picture = userModel.Picture,
+                EmployeeBirthDate = userModel.EmployeeBirthDate,
+                Username = userModel.Username,
+                Role = userModel.Role,
+                IsSuccess = true
+            };
+
+
         }
     }
 }

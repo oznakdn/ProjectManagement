@@ -26,7 +26,10 @@ namespace ProjectManagement.WebAPI.Controllers
         public async Task<IActionResult> GetUserDetail(string id)
         {
             var response = await mediator.Send(new GetUserDetailsQueryRequest(id));
-            
+            if(!response.IsSuccess)
+            {
+                return NotFound(response.ResponseMessage);
+            }
             return Ok(response);
         }
 

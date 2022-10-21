@@ -2,7 +2,7 @@
 
 namespace ProjectManagement.Application.Features.User.Queries.GetUserDetails
 {
-    public class GetUserDetailsQueryRequest:IRequest<GetUserDetailsQueryResponse>
+    public class GetUserDetailsQueryRequest:IRequest<GetUserDetailsQueryResponseMessage>
     {
         public GetUserDetailsQueryRequest(string id)
         {
