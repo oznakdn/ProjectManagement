@@ -5,8 +5,10 @@
         public AddUserCommandResponse(string responseMessage)
         {
             ResponseMessage = responseMessage;
+            IsSuccess = true;
         }
 
         public string ResponseMessage { get; set; }
+        public bool IsSuccess { get; set; }
     }
 }

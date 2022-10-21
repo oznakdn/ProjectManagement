@@ -7,20 +7,25 @@ namespace ProjectManagement.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class AccountController : ControllerBase
     {
         private readonly IMediator mediator;
 
-        public UsersController(IMediator mediator)
+        public AccountController(IMediator mediator)
         {
             this.mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] AddUserCommandRequest request)
         {
             var response = await mediator.Send(request);
-            return Ok(response.ResponseMessage);
+            if(response.IsSuccess)
+            {
+                return Ok(response.ResponseMessage);
+
+            }
+            return BadRequest(response.ResponseMessage);
         }
 
 

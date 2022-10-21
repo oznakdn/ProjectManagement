@@ -11,8 +11,7 @@ namespace ProjectManagement.Application.MappingProfıles
     {
         public UserProfiles()
         {
-            CreateMap<AddUserCommandRequest, User>()
-                .ForMember(src => src.EmployeeId, opt => opt.MapFrom(dest => dest.EmployeeId.ToString()));
+            CreateMap<AddUserCommandRequest, User>();
               
             CreateMap<User,AddUserTokenCommandRequest>();
 

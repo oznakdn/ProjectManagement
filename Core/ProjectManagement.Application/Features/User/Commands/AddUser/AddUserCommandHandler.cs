@@ -23,13 +23,13 @@ namespace ProjectManagement.Application.Features.User.Commands.AddUser
            var existUser = await query.UserQuery.AnyAsync(u=>u.Username == request.Username);
             if(existUser)
             {
-                return new AddUserCommandResponse("User is already exists!");
+                return new AddUserCommandResponse("User is already exists!") { IsSuccess=false};
             }
             
             var user = mapper.Map<Domain.Entities.User>(request);
             await command.UserCommand.AddAsync(user);
             await command.SaveAsync();
-            return new AddUserCommandResponse("User is created.");
+            return new AddUserCommandResponse("User is created.") { IsSuccess=true};
         }
     }
 }
