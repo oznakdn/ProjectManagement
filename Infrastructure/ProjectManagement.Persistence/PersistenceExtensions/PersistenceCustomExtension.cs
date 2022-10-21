@@ -18,11 +18,16 @@ namespace ProjectManagement.Persistence.PersistenceExtensions
             services.AddScoped<IEmployeeQueryRepository, EmployeeQueryRepository>();
             services.AddScoped<IDepartmentQueryRepository, DepartmentQueryRepository>();
             services.AddScoped<IProjectQueryRepository, ProjectQueryRepository>();
+            services.AddScoped<IUserQueryRepository, UserQueryRepository>();
+
+
 
 
             services.AddScoped<IEmployeeCommandRepository, EmployeeCommandRepository>();
             services.AddScoped<IDepartmentCommandRepository, DepartmentCommandRepository>();
             services.AddScoped<IProjectCommandRepository, ProjectCommandRepository>();
+            services.AddScoped<IUserCommandRepository, UserCommandReposiory>();
+
 
         }
     }
