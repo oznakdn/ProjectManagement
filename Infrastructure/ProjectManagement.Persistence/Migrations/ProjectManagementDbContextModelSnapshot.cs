@@ -72,7 +72,7 @@ namespace ProjectManagement.Persistence.Migrations
                             Id = new Guid("f5a37fcc-ef2d-494c-8784-95bdb04195d9"),
                             Address = "Many desktop publishing packages and web page editors now use Lorem",
                             City = "Samsun",
-                            CreatedDate = new DateTime(2022, 10, 19, 11, 4, 55, 179, DateTimeKind.Utc).AddTicks(4778),
+                            CreatedDate = new DateTime(2022, 10, 21, 14, 20, 15, 186, DateTimeKind.Utc).AddTicks(7184),
                             EmailAddress = "ali.kaplan@mail.com",
                             IsActive = true,
                             IsDeleted = false,
@@ -107,7 +107,7 @@ namespace ProjectManagement.Persistence.Migrations
                         new
                         {
                             Id = new Guid("95ac8e7f-2d1d-4361-996c-a297ba3a803c"),
-                            CreatedDate = new DateTime(2022, 10, 19, 11, 4, 55, 179, DateTimeKind.Utc).AddTicks(4968),
+                            CreatedDate = new DateTime(2022, 10, 21, 14, 20, 15, 186, DateTimeKind.Utc).AddTicks(7468),
                             DepartmentName = "IT",
                             IsActive = true,
                             IsDeleted = false
@@ -115,7 +115,7 @@ namespace ProjectManagement.Persistence.Migrations
                         new
                         {
                             Id = new Guid("a2e896e8-ac0f-4b55-902e-38b8ec983c06"),
-                            CreatedDate = new DateTime(2022, 10, 19, 11, 4, 55, 179, DateTimeKind.Utc).AddTicks(4970),
+                            CreatedDate = new DateTime(2022, 10, 21, 14, 20, 15, 186, DateTimeKind.Utc).AddTicks(7471),
                             DepartmentName = "HR",
                             IsActive = true,
                             IsDeleted = false
@@ -165,7 +165,7 @@ namespace ProjectManagement.Persistence.Migrations
                         new
                         {
                             Id = new Guid("f5a37fcc-ef2d-494c-8784-95bdb04195d9"),
-                            CreatedDate = new DateTime(2022, 10, 19, 11, 4, 55, 179, DateTimeKind.Utc).AddTicks(5085),
+                            CreatedDate = new DateTime(2022, 10, 21, 14, 20, 15, 186, DateTimeKind.Utc).AddTicks(7653),
                             DepartmentId = new Guid("95ac8e7f-2d1d-4361-996c-a297ba3a803c"),
                             EmployeeBirthDate = new DateTime(1980, 3, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmployeeLastname = "Kaplan",
@@ -177,7 +177,7 @@ namespace ProjectManagement.Persistence.Migrations
                         new
                         {
                             Id = new Guid("447e5a4d-9bae-48a4-a229-2b210068cea2"),
-                            CreatedDate = new DateTime(2022, 10, 19, 11, 4, 55, 179, DateTimeKind.Utc).AddTicks(5091),
+                            CreatedDate = new DateTime(2022, 10, 21, 14, 20, 15, 186, DateTimeKind.Utc).AddTicks(7661),
                             DepartmentId = new Guid("a2e896e8-ac0f-4b55-902e-38b8ec983c06"),
                             EmployeeBirthDate = new DateTime(1985, 5, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmployeeLastname = "Aslan",
@@ -225,7 +225,7 @@ namespace ProjectManagement.Persistence.Migrations
                         new
                         {
                             Id = new Guid("11426e7f-ea32-4e01-90bf-7609d542a5c9"),
-                            CreatedDate = new DateTime(2022, 10, 19, 11, 4, 55, 179, DateTimeKind.Utc).AddTicks(5253),
+                            CreatedDate = new DateTime(2022, 10, 21, 14, 20, 15, 186, DateTimeKind.Utc).AddTicks(7921),
                             IsActive = true,
                             IsDeleted = false,
                             ProjectDetails = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
@@ -244,7 +244,7 @@ namespace ProjectManagement.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("EmployeeId")
+                    b.Property<Guid?>("EmployeeId")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsActive")
@@ -269,19 +269,6 @@ namespace ProjectManagement.Persistence.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("0a69a0e7-e1c5-4554-b78d-50518dce0f49"),
-                            CreatedDate = new DateTime(2022, 10, 19, 11, 4, 55, 179, DateTimeKind.Utc).AddTicks(5460),
-                            EmployeeId = new Guid("447e5a4d-9bae-48a4-a229-2b210068cea2"),
-                            IsActive = true,
-                            IsDeleted = false,
-                            Password = "aslnsvd123",
-                            Role = 0,
-                            Username = "sevda.aslan@mail.com"
-                        });
                 });
 
             modelBuilder.Entity("EmployeeProject", b =>
@@ -325,9 +312,7 @@ namespace ProjectManagement.Persistence.Migrations
                 {
                     b.HasOne("ProjectManagement.Domain.Entities.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeId");
 
                     b.Navigation("Employee");
                 });
