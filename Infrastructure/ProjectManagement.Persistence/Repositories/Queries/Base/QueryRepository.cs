@@ -77,7 +77,7 @@ namespace ProjectManagement.Persistence.Repositories.Queries.Base
             {
                 query = query.Where(predicate);
             }
-            return await query.SingleAsync();
+            return await query.SingleOrDefaultAsync();
         }
 
         public async Task<T> GetByIdAsync(string id, bool isChangeTracking = false)
@@ -92,7 +92,7 @@ namespace ProjectManagement.Persistence.Repositories.Queries.Base
                 query = query.Where(e => e.Id == Guid.Parse(id));
             }
 
-            return await query.SingleAsync();
+            return await query.SingleOrDefaultAsync();
         }
 
         public async Task<T> GetWithIncludeAsync(bool isChangeTracking, Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includes)
