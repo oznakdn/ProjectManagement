@@ -32,9 +32,7 @@
 <li>AutoMapper.Extensions.Microsoft.DependencyInjection</li>
 <li>MediatR</li>
 <li>MediatR.Extensions.Microsoft.DependencyInjection</li>
-
-
-
 <li>Microsoft.AspNetCore.Authentication.JwtBearer</li>
+<li>NETCore.Encrypt</li>
 </ul>
 
