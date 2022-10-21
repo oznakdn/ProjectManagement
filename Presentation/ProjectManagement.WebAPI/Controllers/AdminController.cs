@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProjectManagement.Application.Features.User.Commands.AddEmployeeToUser;
+using ProjectManagement.Application.Features.User.Commands.UpdateUserRole;
 using ProjectManagement.Application.Features.User.Queries.GetAllUsers;
 using ProjectManagement.Application.Features.User.Queries.GetUserDetails;
 using ProjectManagement.Domain.Enums;
@@ -8,7 +10,7 @@ using ProjectManagement.WebAPI.Customizations;
 
 namespace ProjectManagement.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     //[CustomAuthorize(Role.Manager,Role.Admin)]
 
@@ -22,6 +24,20 @@ namespace ProjectManagement.WebAPI.Controllers
         }
 
 
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsers()
+        {
+            var response = await mediator.Send(new GetAllUsersQueryRequest());
+            if (response.Count == 0)
+            {
+                return BadRequest("There is no any user.");
+            }
+
+            return Ok(response);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserDetail(string id)
         {
@@ -33,17 +49,28 @@ namespace ProjectManagement.WebAPI.Controllers
             return Ok(response);
         }
 
-        [HttpGet]
-        public async Task<IActionResult>GetUsers()
+        [HttpPut]
+        public async Task<IActionResult> EditUserRole([FromBody] UpdateUserRoleCommandRequest request)
         {
-            var response = await mediator.Send(new GetAllUsersQueryRequest());
-            if(response.Count == 0)
+            var response = await mediator.Send(new UpdateUserRoleCommandRequest(request.Id,request.Role));
+            if(response.IsSuccess)
             {
-                return BadRequest("There is no any user.");
+                return Ok(response.ResponseMessage);
             }
-
-            return Ok(response);
+            return BadRequest(response.ResponseMessage);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> AddEmployeeToUser([FromBody] AddEmployeeToUserCommandRequest request)
+        {
+            var response = await mediator.Send(request);
+            if (response.IsSuccess)
+            {
+                return Ok(response.ResponseMessage);
+            }
+            return BadRequest(response.ResponseMessage);
+        }
+
 
 
     }

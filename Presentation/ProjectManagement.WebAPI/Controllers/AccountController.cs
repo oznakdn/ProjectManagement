@@ -32,12 +32,12 @@ namespace ProjectManagement.WebAPI.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] AddUserTokenCommandRequest request)
         {
-            var response = await mediator.Send(request);
-            if(string.IsNullOrEmpty(response.Token))
+           var response = await mediator.Send(request);
+           if(response.IsSuccess)
             {
-                return BadRequest();
+                return Ok(response.Token);
             }
-            return Ok(response);
+            return BadRequest(response.ResponseMessage);
         }
     }
 }
