@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjectManagement.Persistence.Contexts;
-using System.Reflection;
 using System.Text;
 
 namespace ProjectManagement.WebAPI.PresentationExtensions
