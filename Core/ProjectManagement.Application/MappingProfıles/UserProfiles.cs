@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using ProjectManagement.Application.Features.User.Commands.AddEmployeeToUser;
 using ProjectManagement.Application.Features.User.Commands.AddUser;
 using ProjectManagement.Application.Features.User.Commands.AddUserToken;
+using ProjectManagement.Application.Features.User.Commands.UpdateUserRole;
 using ProjectManagement.Application.Features.User.Queries.GetAllUsers;
 using ProjectManagement.Application.Features.User.Queries.GetUserDetails;
 using ProjectManagement.Domain.Entities;
@@ -12,6 +14,10 @@ namespace ProjectManagement.Application.MappingProfıles
         public UserProfiles()
         {
             CreateMap<AddUserCommandRequest, User>();
+            CreateMap<UpdateUserRoleCommandRequest, User>();
+            CreateMap<AddEmployeeToUserCommandRequest, User>()
+                .ForMember(src => src.EmployeeId, opt => opt.MapFrom(dest =>Guid.Parse(dest.EmployeeId)));
+               
               
             CreateMap<User,AddUserTokenCommandRequest>();
 

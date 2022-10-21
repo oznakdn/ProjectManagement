@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using ProjectManagement.Application.Extensions;
 using ProjectManagement.Application.UnitOfWork;
+using ProjectManagement.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -21,12 +23,18 @@ namespace ProjectManagement.Application.Features.User.Commands.AddUserToken
 
         public async Task<AddUserTokenCommandResponse> Handle(AddUserTokenCommandRequest request, CancellationToken cancellationToken)
         {
-            // User exists check
-            var existingUser = await query.UserQuery.GetAsync(u => u.Username == request.Username && u.Password == request.Password);
+            // Username and Password validation check
+            request.Password = PasswordGeneratorExtension.PasswordHashGenerate(configuration, request.Password);
 
-            if (existingUser == null)
+            var existsUser = await query.UserQuery.AnyAsync(u => u.Username ==
+            request.Username && u.Password == request.Password);
+
+            var user = await query.UserQuery.GetAsync(u => u.Username == request.Username && u.Password == request.Password);
+
+            // Username or/and password invalid check
+            if (!existsUser || user == null)
             {
-                return new AddUserTokenCommandResponse { ResponseMessage = "User not found!", Token = string.Empty };
+                return new AddUserTokenCommandResponse { ResponseMessage = "Username or Password is wrong!", Token = string.Empty,IsSuccess=false };
             }
 
             // If User is exists ,creating a token 
@@ -41,8 +49,8 @@ namespace ProjectManagement.Application.Features.User.Commands.AddUserToken
                 Subject = new ClaimsIdentity(
                     new Claim[]
                     {
-                        new Claim (ClaimTypes.Name,existingUser.Username),
-                        new Claim (ClaimTypes.Role,existingUser.Role.ToString()),
+                        new Claim (ClaimTypes.Name,user.Username),
+                        new Claim (ClaimTypes.Role,user.Role.ToString()),
                     }
                 ),
                 Expires = DateTime.Now.AddMinutes(5)
@@ -53,7 +61,7 @@ namespace ProjectManagement.Application.Features.User.Commands.AddUserToken
 
             // returns access token
 
-            return new AddUserTokenCommandResponse { Token = accessToken, ResponseMessage = "Token is created successfully" };
+            return new AddUserTokenCommandResponse { Token = accessToken, ResponseMessage = "Token is created successfully",IsSuccess = true };
 
         }
     }
