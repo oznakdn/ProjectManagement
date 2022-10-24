@@ -38,7 +38,8 @@ namespace ProjectManagement.WebAPI.PresentationExtensions
 
                         ValidAudience = configuration.GetValue<string>("Jwt:Audience"),
                         ValidIssuer = configuration.GetValue<string>("Jwt:Issuer"),
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
+                       // LifetimeValidator = (notBefore, expires, securityToken, validationParameters) => expires != null ? expires > DateTime.Now : false
                     };
 
                 });

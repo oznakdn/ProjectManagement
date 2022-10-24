@@ -1,11 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ProjectManagement.Application.Features.User.Commands.AddUser;
-using ProjectManagement.Application.Features.User.Commands.AddUserToken;
+using ProjectManagement.Application.Features.User.Commands.LoginRefreshUser;
+using ProjectManagement.Application.Features.User.Commands.LoginUser;
 
 namespace ProjectManagement.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -16,11 +17,11 @@ namespace ProjectManagement.WebAPI.Controllers
             this.mediator = mediator;
         }
 
-        [HttpPost("Register")]
+        [HttpPost]
         public async Task<IActionResult> Register([FromBody] AddUserCommandRequest request)
         {
             var response = await mediator.Send(request);
-            if(response.IsSuccess)
+            if (response.IsSuccess)
             {
                 return Ok(response.ResponseMessage);
 
@@ -29,15 +30,27 @@ namespace ProjectManagement.WebAPI.Controllers
         }
 
 
-        [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody] AddUserTokenCommandRequest request)
+        [HttpPost]
+        public async Task<IActionResult> Login([FromBody] LoginUserCommandRequest request)
         {
-           var response = await mediator.Send(request);
-           if(response.IsSuccess)
+            var response = await mediator.Send(request);
+            if (response.IsSuccess)
             {
-                return Ok(response.Token);
+                return Ok(response);
             }
             return BadRequest(response.ResponseMessage);
+        }
+
+        [HttpPost("{refreshToken}")]
+        public async Task<IActionResult> LoginRefresh(string refreshToken)
+        {
+            var response = await mediator.Send(new LoginRefreshUserCommandRequest(refreshToken));
+            if (response.IsSuccess)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response.ResponseMessage);
+
         }
     }
 }

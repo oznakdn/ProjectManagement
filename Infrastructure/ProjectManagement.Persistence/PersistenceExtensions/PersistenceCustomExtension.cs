@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using ProjectManagement.Application.Abstracts;
 using ProjectManagement.Application.Repositories.Commands;
 using ProjectManagement.Application.Repositories.Queries;
 using ProjectManagement.Application.UnitOfWork;
+using ProjectManagement.Persistence.Concretes;
 using ProjectManagement.Persistence.Repositories.Commands;
 using ProjectManagement.Persistence.Repositories.Queries;
 using ProjectManagement.Persistence.UnitOfWork;
@@ -27,6 +29,8 @@ namespace ProjectManagement.Persistence.PersistenceExtensions
             services.AddScoped<IDepartmentCommandRepository, DepartmentCommandRepository>();
             services.AddScoped<IProjectCommandRepository, ProjectCommandRepository>();
             services.AddScoped<IUserCommandRepository, UserCommandReposiory>();
+
+            services.AddScoped<ITokenHandler, TokenHandler>();
 
 
         }
