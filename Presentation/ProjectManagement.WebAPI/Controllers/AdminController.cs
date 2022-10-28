@@ -1,12 +1,10 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectManagement.Application.Features.User.Commands.AddEmployeeToUser;
+using ProjectManagement.Application.Features.User.Commands.DeleteUser;
 using ProjectManagement.Application.Features.User.Commands.UpdateUserRole;
 using ProjectManagement.Application.Features.User.Queries.GetAllUsers;
 using ProjectManagement.Application.Features.User.Queries.GetUserDetails;
-using ProjectManagement.Domain.Enums;
-using ProjectManagement.WebAPI.Customizations;
 
 namespace ProjectManagement.WebAPI.Controllers
 {
@@ -22,8 +20,6 @@ namespace ProjectManagement.WebAPI.Controllers
         {
             this.mediator = mediator;
         }
-
-
 
 
         [HttpGet]
@@ -68,6 +64,16 @@ namespace ProjectManagement.WebAPI.Controllers
             {
                 return Ok(response.ResponseMessage);
             }
+            return BadRequest(response.ResponseMessage);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult>DeleteUser(string id)
+        {
+            var response = await mediator.Send(new DeleteUserCommandRequest(id));
+            if (response.IsSuccess)
+                return Ok(response.ResponseMessage);
+
             return BadRequest(response.ResponseMessage);
         }
 
