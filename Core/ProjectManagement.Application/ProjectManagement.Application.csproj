@@ -20,4 +20,8 @@
     <ProjectReference Include="..\ProjectManagement.Domain\ProjectManagement.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Project\Commands\AddProject\" />
+  </ItemGroup>
+
 </Project>
