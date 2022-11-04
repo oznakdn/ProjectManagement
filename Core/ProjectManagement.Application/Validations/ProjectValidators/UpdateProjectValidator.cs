@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using ProjectManagement.Application.Features.Project.Commands.UpdateProject;
+using ProjectManagement.Domain.Entities;
 
 namespace ProjectManagement.Application.Validations.ProjectValidators
 {
@@ -7,6 +8,10 @@ namespace ProjectManagement.Application.Validations.ProjectValidators
     {
         public UpdateProjectValidator()
         {
+
+            RuleFor(p => p.Id).NotEmpty().NotNull().WithMessage("{PropertyName} is required!")
+                .Must(IdValidate).WithMessage("{PropertyName} should be 36 character!");
+
             RuleFor(p => p.ProjectTitle).NotEmpty().NotNull().WithMessage("{PropertyName} is required!")
                .Length(5, 100).WithMessage("{PropertyName} must be between 5 and 100 characters!");
 
@@ -19,6 +24,11 @@ namespace ProjectManagement.Application.Validations.ProjectValidators
             RuleFor(p => p.ProjectEndDate).NotNull().WithMessage("{PropertyName} is required!")
                 .GreaterThan(p => p.ProjectStartDate).WithMessage("Project ending date must be greater then project start date!");
 
+        }
+
+        private bool IdValidate(string Id)
+        {
+            return Id.Length == 36 && Id.Contains('-');
         }
     }
 }
