@@ -13,6 +13,15 @@ builder.Services.AddControllers()
 builder.Services.AddPresentationExtension(builder.Configuration);
 builder.Services.AddPersistenceExtension();
 builder.Services.AddApplicationExtension();
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("AppCors", conf =>
+    {
+        conf.WithOrigins("https://localhost:7263", "http://localhost:5263");
+        conf.AllowAnyHeader();
+        conf.AllowAnyMethod();
+    });
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -25,6 +34,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AppCors");
 
 app.UseHttpsRedirection();
 
