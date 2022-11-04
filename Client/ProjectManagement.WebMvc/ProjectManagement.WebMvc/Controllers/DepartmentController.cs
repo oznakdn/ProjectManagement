@@ -20,6 +20,7 @@ namespace ProjectManagement.WebMvc.Controllers
             HttpResponseMessage respponse =await client.GetAsync("https://localhost:7122/api/Departments");
             string stringData =await respponse.Content.ReadAsStringAsync();
 
+
             List<GetDepartmentsViewModel> departments = JsonConvert.DeserializeObject<List<GetDepartmentsViewModel>>(stringData);
             if (respponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
