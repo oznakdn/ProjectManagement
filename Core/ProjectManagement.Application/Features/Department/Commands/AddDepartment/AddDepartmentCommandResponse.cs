@@ -2,11 +2,8 @@
 {
     public class AddDepartmentCommandResponse
     {
-        public AddDepartmentCommandResponse(string responseMessage)
-        {
-            ResponseMessage = responseMessage;
-        }
-
         public string ResponseMessage { get; set; }
+        public bool IsSuccess { get; set; } = true;
+        public List<string> ErrorMessages = new();
     }
 }
