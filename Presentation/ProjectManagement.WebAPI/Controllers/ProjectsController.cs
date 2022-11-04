@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ProjectManagement.Application.Features.Project.Commands.AddProject;
 using ProjectManagement.Application.Features.Project.Commands.AddProjectEmployee;
 using ProjectManagement.Application.Features.Project.Commands.DeleteEmployeeOnProject;
+using ProjectManagement.Application.Features.Project.Commands.UpdateProject;
 using ProjectManagement.Application.Features.Project.Queries.GetAllProjects;
 using ProjectManagement.Application.Features.Project.Queries.GetAllProjectsWith;
 using ProjectManagement.Application.Features.Project.Queries.GetProjectById;
@@ -46,6 +48,16 @@ namespace ProjectManagement.WebAPI.Controllers
             return Ok(response);
         }
 
+        [HttpPost("AddProject")]
+        public async Task<IActionResult> AddProject([FromBody] AddProjectCommandRequest request)
+        {
+            var response = await mediator.Send(request);
+            if (response.IsSuccess)
+                return Ok(response.ResponseMessage);
+
+            return BadRequest(new {response.ResponseMessage , response.ErrorMessages});
+        }
+
         [HttpPost]
         [ActionName("AddProjectEmployee")]
         public async Task<IActionResult> AddProjectEmployee([FromBody] AddProjectEmployeeCommandRequest request)
@@ -55,6 +67,16 @@ namespace ProjectManagement.WebAPI.Controllers
                 return Ok(response.ResponseMessage);
 
             return BadRequest(response.ResponseMessage);
+        }
+
+        [HttpPut("UpdateProject")]
+        public async Task<IActionResult> UpdateProject([FromBody] UpdateProjectCommandRequest request)
+        {
+            var response = await mediator.Send(request);
+            if (response.IsSuccess)
+                return Ok(response.ResponseMessage);
+
+            return BadRequest(new { response.ResponseMessage, response.ErrorMessages });
         }
 
         [HttpDelete]
@@ -67,5 +89,7 @@ namespace ProjectManagement.WebAPI.Controllers
 
             return BadRequest(response.ResponseMessage);
         }
+
+       
     }
 }
