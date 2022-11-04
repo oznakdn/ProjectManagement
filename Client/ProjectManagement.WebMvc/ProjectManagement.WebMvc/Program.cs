@@ -3,15 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
-builder.Services.AddCors(opt =>
-{
-    opt.AddPolicy("AppCors", conf =>
-    {
-        conf.WithOrigins("https://localhost:7122/", "http://localhost:5122");
-        conf.AllowAnyHeader();
-        conf.AllowAnyMethod();
-    });
-});
+
 
 var app = builder.Build();
 
@@ -27,13 +19,13 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseCors("AppCors");
 app.UseSession();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();

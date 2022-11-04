@@ -1,0 +1,22 @@
+﻿@model List<ProjectManagement.WebMvc.Models.DepartmentViewModels.GetDepartmentsViewModel>
+
+
+    <div class="col-8 offset-2">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Department Id</th>
+                    <th>Department Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.DepartmentName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

@@ -1,0 +1,16 @@
+﻿@model ProjectManagement.WebMvc.Models.UserViewModels.LoginViewModel
+
+
+<form method="post">
+    <div class="form-group">
+        <label class="form-label">Username</label>
+        <input type="text" asp-for="username" />
+    </div>
+    <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="text" asp-for="password" />
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Login</button>
+    </div>
+</form>
