@@ -41,7 +41,10 @@ namespace ProjectManagement.WebAPI.Controllers
         public async Task<IActionResult> CreateDepartment([FromBody] AddDepartmentCommandRequest request)
         {
             var response = await mediator.Send(request);
+            if(response.IsSuccess)
             return Ok(response.ResponseMessage);
+
+            return BadRequest(new { response.ResponseMessage, response.ErrorMessages });
         }
 
         [HttpPut]
