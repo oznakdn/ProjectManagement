@@ -1,8 +1,11 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectManagement.Application.Features.User.Commands.AddUser;
 using ProjectManagement.Application.Features.User.Commands.LoginRefreshUser;
 using ProjectManagement.Application.Features.User.Commands.LoginUser;
+using ProjectManagement.Application.Features.User.Commands.LogoutUser;
+using System.Security.Claims;
 
 namespace ProjectManagement.WebAPI.Controllers
 {
@@ -49,6 +52,26 @@ namespace ProjectManagement.WebAPI.Controllers
             {
                 return Ok(response);
             }
+            return BadRequest(response.ResponseMessage);
+
+        }
+
+
+        // TODO: Logout endpoint yapılacak
+        //[Authorize(Roles ="Admin")]
+        [HttpPost("{userId}")]
+        public async Task<IActionResult> Logout(string userId)
+        {
+            string id = HttpContext.User.FindFirstValue(userId);
+            if(userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var response =await mediator.Send(new LogoutUserCommandRequest (userId));
+            if (response.IsSuccess)
+                return Ok(response.ResponseMessage);
+
             return BadRequest(response.ResponseMessage);
 
         }
