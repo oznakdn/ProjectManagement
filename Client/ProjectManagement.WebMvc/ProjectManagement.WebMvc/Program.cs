@@ -28,6 +28,12 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
+
+app.MapAreaControllerRoute(
+    name: "Admin",
+    areaName:"Admin",
+    pattern:"Admin/{controller=Admin}/{action = Dashboard}/{id?}");
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

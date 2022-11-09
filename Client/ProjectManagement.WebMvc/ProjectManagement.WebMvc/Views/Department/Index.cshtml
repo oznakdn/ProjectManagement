@@ -1,22 +1,42 @@
 ﻿@model List<ProjectManagement.WebMvc.Models.DepartmentViewModels.GetDepartmentsViewModel>
 
 
+
+<div class="row mt-2">
+    <div class="col-8 offset-2">
+        <h3 class="display-2 text-center text-primary border-bottom mb-3 bg-opacity-25 bg-success">Departments</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-8 offset-2">
+        <a class="btn btn-primary small" asp-action="Create"><i class="fa-solid fa-square-plus"></i></a>
+    </div>
+</div>
+<div class="row mt-3">
     <div class="col-8 offset-2">
         <table class="table table-bordered">
-            <thead>
-                <tr>
+            <thead class="text-center text-primary">
+                <tr class="text-center">
                     <th>Department Id</th>
                     <th>Department Name</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
+                    <tr class="text-center">
                         <td>@item.Id</td>
                         <td>@item.DepartmentName</td>
+                        <td>
+                            <a class="btn btn-info small" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                            <a class="btn btn-warning small" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a class="btn btn-danger small" asp-action="Remove" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
+</div>
+    
