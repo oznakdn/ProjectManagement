@@ -1,0 +1,22 @@
+﻿@model ProjectManagement.WebMvc.Models.DepartmentViewModels.UpdateDepartmentViewModel
+
+<div class="row">
+    <div class="col-8 offset-2">
+        <h1 class="display-3 text-center text-primary bg-opacity-50 bg-primary">Creating a Department</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-8 offset-2">
+        <form method="post" class="w-50">
+            <input type="hidden" asp-for="Id"/>
+            <div class="form-group">
+                <label class="form-label">Department Name</label>
+                <input class="form-control" type="text" asp-for="DepartmentName" />
+            </div>
+            <div class="form-group mt-2">
+                <button class="btn btn-primary" type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+

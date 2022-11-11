@@ -29,9 +29,9 @@
                         <td>@item.Id</td>
                         <td>@item.DepartmentName</td>
                         <td>
-                            <a class="btn btn-info small" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
-                            <a class="btn btn-warning small" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a class="btn btn-danger small" asp-action="Remove" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
+                            <a class="btn btn-info small" asp-action="Details" asp-route-departmentName="@item.DepartmentName"><i class="fa-solid fa-circle-info"></i></a>
+                            <a class="btn btn-warning small" asp-action="Edit" asp-route-departmentName="@item.DepartmentName"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a class="btn btn-danger small" asp-action="Delete" asp-route-id="@item.Id"><i class="fa-solid fa-trash"></i></a>
                         </td>
                     </tr>
                 }
